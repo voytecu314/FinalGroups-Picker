@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.App {
+    width: 95vw;
+    margin: auto; 
+}
+
+.headers {
+    width: 90%;
+    margin: 1% auto;
+    text-align: center;
+}
+
+#cards {
+    display: flex;
+    width: 90%;
+    margin: auto;
+}
+
+.card {
+    width: 10%;
+}
