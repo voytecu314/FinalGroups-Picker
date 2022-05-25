@@ -70,6 +70,8 @@ const remove_members = (chosen_group) => {
                 
         }
 
+        console.log(choices);
+
         for (const key in connections) {
             
             for (const elem of connections[key]) {

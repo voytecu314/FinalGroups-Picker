@@ -1,5 +1,5 @@
 import { two_permutations } from "./permutations.js";
-import { connections, members } from "./choose_one_strongest_group.js";
+import { connections, members} from "./choose_one_strongest_group.js";
 
 export const strengths = (permutations) => {
     
