@@ -9,18 +9,63 @@
     margin: auto; 
 }
 
-.headers {
+#header {
     width: 90%;
     margin: 1% auto;
     text-align: center;
 }
 
+.headers {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+}
+
 #cards {
     display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    gap: 1%;
     width: 90%;
+    height: 80vh;
     margin: auto;
 }
 
 .card {
     width: 10%;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 1% 2%;
+    border: 1px solid grey;
+}
+
+#modal {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: grey;
+    border: 10px darkgray solid;
+
+}
+
+#close-modal {
+    position: absolute;
+    top:0;
+    right:0;
+    font-size: 2rem;
+    border: 5px black solid;
+}
+
+#modal-name {
+    font-size: 3rem;
+}
+
+#modal-input {
+    width: 400px;
+    height: 50px;
+    font-size: 2.3rem;
 }
