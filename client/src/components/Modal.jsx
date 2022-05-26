@@ -1,8 +1,12 @@
-import {useContext} from 'react';
+import { useState,useContext } from 'react';
 import MyContext from '../context/MyContext';
+import PassForm from './PassForm';
+import Sliders from './Sliders';
 
 
 const Modal = ({name}) => {
+
+    const [loggedIn, setLoggedIn] = useState(false);
 
     const {setShowModal} = useContext(MyContext);
 
@@ -13,12 +17,9 @@ const Modal = ({name}) => {
   return (
     <div id="modal">
         
-        <form action="http://localhost:5000/password" method='post'>
-            <h1 id="modal-name">{name}</h1> 
-            <input id="modal-input" type="password" placeholder='Type your pass here' name={'password'}/> 
-            <br />
-            <input type="submit" value="Submit" />  
-        </form>
+        {loggedIn?
+        <Sliders name={name}/>:
+        <PassForm name={name}/>}
         
         <button id="close-modal" onClick={closeModal}>X</button>
     </div>

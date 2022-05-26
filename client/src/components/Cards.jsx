@@ -1,16 +1,17 @@
+import { useState, useContext } from "react";
+import MyContext from "../context/MyContext.js";
 import Card from "./Card.jsx";
 
 const Cards = () => {
 
-    //fetch members from servers database
-    const members=["Fin","Allan","Haakim","Gerald","Uche","Egle","Andrija","Felix","Marco","Wais","Ann","Wojtek","Paul","Carlos","Vonn"];
+    const { members } = useContext(MyContext);
 
-
-
+    if(members.loading) return <p>Loading...</p>
+    if(members.error) return <p>{members.error}</p>
 
   return (
     <div id="cards">
-        {members.map((member,i)=><Card key={i} name={member}/>)}
+        {members.names.map((member,i)=><Card key={i} name={member}/>)}
     </div>
   )
 }
