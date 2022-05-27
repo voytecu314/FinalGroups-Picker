@@ -11,7 +11,9 @@ const Cards = () => {
 
   return (
     <div id="cards">
-        {members.names.map((member,i)=><Card key={i} name={member}/>)}
+        {members.names.map((member,i)=><Card key={i} name={member} addClass="card" />)}
+        {/* <Card key={members.length} name="See voting results" addClass="see-votes-btn"/> */}
+
     </div>
   )
 }

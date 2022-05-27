@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-const PassForm = ({name}) => {
+const PassForm = ({name,setAuth}) => {
 
         const form = useRef();
 
@@ -17,7 +17,7 @@ const PassForm = ({name}) => {
                         body: JSON.stringify(loginData)
                         })
                         .then(rsp=>rsp.json())
-                        .then(console.log)
+                        .then(result=>setAuth(result.auth))
                         .catch(err=>console.log(err.message));
         }
 

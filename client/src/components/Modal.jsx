@@ -6,7 +6,7 @@ import Sliders from './Sliders';
 
 const Modal = ({name}) => {
 
-    const [loggedIn, setLoggedIn] = useState(false);
+  const [auth, setAuth] = useState(null);
 
     const {setShowModal} = useContext(MyContext);
 
@@ -16,10 +16,12 @@ const Modal = ({name}) => {
 
   return (
     <div id="modal">
+
+        <h1>{auth===null?'Please Login':auth?`Welcome ${name} !`:'Password not correct'}</h1>  
         
-        {loggedIn?
+        {auth?
         <Sliders name={name}/>:
-        <PassForm name={name}/>}
+        <PassForm name={name} setAuth={setAuth}/>}
         
         <button id="close-modal" onClick={closeModal}>X</button>
     </div>

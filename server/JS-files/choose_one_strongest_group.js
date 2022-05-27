@@ -1,23 +1,20 @@
 import { two_permutations,  three_permutations, four_permutations, five_permutations} from "./permutations.js";
 import { strengths } from "./calculate_strenghts.js";
 
-export const members=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","W","X","Y","Z"];
+export const members=["Allan","Andrija","Ann","Carlos","Egle","Felix","Fin","Gerald","Haakim","Marco","Paul","Uche","Vonn","Wais","Wojtek"];
 
 const setGroups = [];
 
-const membersNo = 14;
+//const membersNo = 14;
 
 const rnd_indicator = 5;
 
-members.splice(membersNo);
+//members.splice(membersNo);
 
 const choices = members.reduce((acc,group)=>({
         ...acc,
-        [group]: members.map(member=>{if(group!==member) {return {[member]: Math.floor(Math.random()*rnd_indicator)}} else return {[member]: undefined} })
+        [group]: members.map(member=>{if(group!==member) {return {[member]: Math.floor(Math.random()*0)}} else return {[member]: null} })
     }),{});
-
-
-
 
 export const connections = {};
 
@@ -69,7 +66,6 @@ const remove_members = (chosen_group) => {
                 }
                 
         }
-
 
         for (const key in connections) {
             
