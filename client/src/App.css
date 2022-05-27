@@ -41,17 +41,17 @@
     border: 1px solid grey;
 }
 
-/* .see-votes-btn {
-    flex: 2 4; 
-    align-self: center; 
-    justify-self: flex-end;
+.see-votes-btn {
+    flex: .5; 
+    margin-top: 20%;
+    align-self: center;
     font-size: 1.5rem;
     text-align: center;
     overflow: hidden;
     padding: 1% 2%;
     border: 1px solid grey;
     background-color: aqua;
-} */
+}
 
 #modal {
     display: grid;

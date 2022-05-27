@@ -6,6 +6,7 @@ const choicesSchema = mongoose.Schema({
       Ann: [Object],
       Carlos: [Object],
       Egle: [Object],
+      Felix: [Object],
       Fin: [Object],
       Gerald: [Object],
       Haakim: [Object],

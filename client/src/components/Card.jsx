@@ -11,8 +11,12 @@ const Card = ({name, addClass}) => {
         setModalName(e.target.innerText);
     }
 
+    const showVotes = () => {
+      console.log('Votes!');
+    }
+
   return (
-    <button className={addClass} onClick={showLoginModal}>{name}</button>
+    <button className={addClass} onClick={addClass==='card'?showLoginModal:showVotes}>{name}</button>
   )
 }
 

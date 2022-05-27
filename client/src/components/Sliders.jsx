@@ -15,14 +15,15 @@ const Sliders = ({name}) => {
 
         let data = {[name]:[]};
         const formElements=e.target.children;
+        
 
-        for(let i=2; i<formElements.length; i+=2) {
+        for(let i=1; i<formElements.length-1; i++) {
 
-            e.target.children[i].name!==name ?
-            data[name].push({[e.target.children[i].name]: e.target.children[i].value}) :
-            data[name].push({[e.target.children[i].name]: null})
+            formElements[i].children[1].name!==name ?
+            data[name].push({[formElements[i].children[1].name]: formElements[i].children[1].value}) :
+            data[name].push({[formElements[i].children[1].name]: null})
         }
-            
+           
         fetch('http://localhost:5000/votes',{
                         method: 'PUT',
                         headers: {'Content-Type': 'application/json'},
@@ -62,7 +63,8 @@ const Sliders = ({name}) => {
                                         type="range" 
                                         id="vol" 
                                         value={100}
-                                        name={member}disabled/>
+                                        name={member}
+                                        disabled/>
                                     </div>))}
         
         

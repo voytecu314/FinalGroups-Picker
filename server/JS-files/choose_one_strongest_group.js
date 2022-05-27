@@ -11,23 +11,7 @@ const rnd_indicator = 5;
 
 //members.splice(membersNo);
 
-const choices = members.reduce((acc,group)=>({
-        ...acc,
-        [group]: members.map(member=>{if(group!==member) {return {[member]: Math.floor(Math.random()*0)}} else return {[member]: null} })
-    }),{});
 
-export const connections = {};
-
-for (const group in choices) {
-    connections[group] = [];
-
-    for (const member in choices) {
-
-         if(group!==member){connections[group].push({[member]:(choices[group][members.indexOf(member)][member]+choices[member][members.indexOf(group)][group])/2})}
-         else connections[group].push({[member]:undefined});
-
-    }
-}
 
 const getBiggestGroup = (tmp_perm, tmp_strg, max_strg) => {
             
@@ -47,7 +31,8 @@ const getBiggestGroup = (tmp_perm, tmp_strg, max_strg) => {
 //remove members of chosen group from overall members
 //sanitize choices and connections 
 
-const remove_members = (chosen_group) => {
+const remove_members = (chosen_group, choices, connections) => {
+    
     
     for(let i=0; i<chosen_group.length; i++){
 
@@ -56,6 +41,8 @@ const remove_members = (chosen_group) => {
 
         delete choices[chosen_group[i]];
         delete connections[chosen_group[i]]
+
+        
 
         for (const key in choices) {
             
@@ -85,24 +72,24 @@ const remove_members = (chosen_group) => {
 //3 or 4 member groups are in favor over 2 and 5 (4 over 3 and 5 over 2): 4, 3, 5, 2
 //actually more member groups will have less chances to be stronger and also more members means connections are more significant therefore addition of n(n-1)/2 (need to adjust it)
 
-const choose_strongest_group = () => {
+const choose_strongest_group = (choices, connections) => {
 
     if(members.length===0) {return setGroups;}
 
     if(members.length===2 || members.length===3) {setGroups.push(members); return setGroups}
 
-    const biggest_two_strength = Math.max(...strengths(two_permutations(members)));
+    const biggest_two_strength = Math.max(...strengths(two_permutations(members), connections));
     const tmp_two_perm = two_permutations(members); 
-    const tmp_two_strg = strengths(two_permutations(members)); 
+    const tmp_two_strg = strengths(two_permutations(members), connections); 
     const strongest_two_group=getBiggestGroup(tmp_two_perm, tmp_two_strg, biggest_two_strength);
     
     let biggest_three_strength = 0;
     let tmp_three_perm, tmp_three_strg, strongest_three_group;
 
     if(members.length>3 && members.length!==4){
-        biggest_three_strength = Math.max(...strengths(three_permutations(members)));
+        biggest_three_strength = Math.max(...strengths(three_permutations(members), connections));
         tmp_three_perm = JSON.parse(JSON.stringify(three_permutations(members)));
-        tmp_three_strg = strengths(three_permutations(members));
+        tmp_three_strg = strengths(three_permutations(members), connections);
         strongest_three_group=getBiggestGroup(tmp_three_perm, tmp_three_strg, biggest_three_strength);
     }
 
@@ -110,18 +97,18 @@ const choose_strongest_group = () => {
     let tmp_four_perm, tmp_four_strg, strongest_four_group;
 
     if(members.length>=4 && members.length!==5){
-        biggest_four_strength = Math.max(...strengths(four_permutations(members)));
+        biggest_four_strength = Math.max(...strengths(four_permutations(members), connections));
         tmp_four_perm = JSON.parse(JSON.stringify(four_permutations(members)));
-        tmp_four_strg = strengths(four_permutations(members));
+        tmp_four_strg = strengths(four_permutations(members), connections);
         strongest_four_group=getBiggestGroup(tmp_four_perm, tmp_four_strg, biggest_four_strength);
     }
 
     let biggest_five_strength = 0;
     let tmp_five_perm, tmp_five_strg, strongest_five_group;
     if(members.length>=5 && members.length!==6){
-        biggest_five_strength = Math.max(...strengths(five_permutations(members)));
+        biggest_five_strength = Math.max(...strengths(five_permutations(members), connections));
         tmp_five_perm = JSON.parse(JSON.stringify(five_permutations(members)));
-        tmp_five_strg = strengths(five_permutations(members));
+        tmp_five_strg = strengths(five_permutations(members), connections);
         strongest_five_group=getBiggestGroup(tmp_five_perm, tmp_five_strg, biggest_five_strength);
     }
 
@@ -132,11 +119,11 @@ const choose_strongest_group = () => {
 
     const strongest_chosen_groups = {groups:[strongest_two_group,strongest_three_group,strongest_four_group,strongest_five_group]};
 
-    remove_members(strongest_chosen_groups.groups[index_of_max_strenght]);
+    remove_members(strongest_chosen_groups.groups[index_of_max_strenght], choices, connections);
 
     setGroups.push(strongest_chosen_groups.groups[index_of_max_strenght]);
 
-    return choose_strongest_group();
+    return choose_strongest_group(choices, connections);
 }
 
 export default choose_strongest_group;

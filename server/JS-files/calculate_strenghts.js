@@ -1,11 +1,15 @@
 import { two_permutations } from "./permutations.js";
-import { connections, members} from "./choose_one_strongest_group.js";
+import { members} from "./choose_one_strongest_group.js";
 
-export const strengths = (permutations) => {
+export const strengths = (permutations, connections) => {
     
     const n_sum=(permutations[0].length*(permutations[0].length-1))/2;
 
-    const connections_of_two_strengths_list = permutations.map(group=>two_permutations(group).map(group_of2=>connections[group_of2[0]][members.indexOf(group_of2[1])][group_of2[1]]));
+    const connections_of_two_strengths_list = 
+        permutations.map(group=> 
+                two_permutations(group).map(group_of2=>{
+                    return connections[group_of2[0]][members.indexOf(group_of2[1])][group_of2[1]]})
+                    );
     
     const strengths_list = connections_of_two_strengths_list.map(strengths_group=>strengths_group.reduce((a,b)=>a+b)/n_sum);
 
