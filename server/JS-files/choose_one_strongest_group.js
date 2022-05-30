@@ -1,9 +1,6 @@
 import { two_permutations,  three_permutations, four_permutations, five_permutations} from "./permutations.js";
 import { strengths } from "./calculate_strenghts.js";
 
-
-const setGroups = [];
-
 //const membersNo = 14;
 
 const rnd_indicator = 5;
@@ -71,7 +68,7 @@ const remove_members = (chosen_group, choices, connections, members) => {
 //3 or 4 member groups are in favor over 2 and 5 (4 over 3 and 5 over 2): 4, 3, 5, 2
 //actually more member groups will have less chances to be stronger and also more members means connections are more significant therefore addition of n(n-1)/2 (need to adjust it)
 
-const choose_strongest_group = (choices, connections, members) => {
+const choose_strongest_group = (choices, connections, members, setGroups) => {
 
     if(members.length===0) {return setGroups;}
 
@@ -122,7 +119,7 @@ const choose_strongest_group = (choices, connections, members) => {
 
     setGroups.push(strongest_chosen_groups.groups[index_of_max_strenght]);
 
-    return choose_strongest_group(choices, connections, members);
+    return choose_strongest_group(choices, connections, members, setGroups);
 }
 
 export default choose_strongest_group;

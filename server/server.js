@@ -9,9 +9,8 @@ import countConnections from './JS-files/choices-connections.js';
 import membersModel from './model/membersModel.js';
 import choicesModel from './model/choicesModel.js';
 import choose_strongest_group from './JS-files/choose_one_strongest_group.js';
-
-const members=["Allan","Andrija","Ann","Carlos","Egle","Felix","Fin","Gerald","Haakim","Marco","Paul","Uche","Vonn","Wais","Wojtek"];
-
+//const members=["Allan","Andrija","Ann","Carlos","Egle","Felix","Fin","Gerald","Haakim","Marco","Paul","Uche","Vonn","Wais","Wojtek"];
+//const test = ['test']
 
 const app = express();
 
@@ -36,7 +35,7 @@ app.get('/choices',async (req, res) => {
 });
 
 app.get('/members',async (req, res) => {
-
+   
     const result = await membersModel.find();
     res.json(result[0].names);
 
@@ -69,16 +68,16 @@ app.post('/points', async (req, res) => {
 
 
 app.get('/show-groups', async (req, res)=>{
-
+    const mmbrs = await membersModel.find();
     const result = await choicesModel.find();
-
+    const members = mmbrs[0].names;
     const choices = result[0]['_doc' ];
     delete choices['_id'];
     delete choices['__v'];
-    
+   
     const connections = countConnections(choices, members);
-
-    const strongest_groups = choose_strongest_group(choices, connections, members);
+    const setGroups = [];
+    const strongest_groups = choose_strongest_group(choices, connections, members, setGroups);
 
     res.json(strongest_groups);
 
