@@ -11,7 +11,7 @@ import choicesModel from './model/choicesModel.js';
 import choose_strongest_group, { members } from './JS-files/choose_one_strongest_group.js';
 
 const app = express();
-
+console.log(members);
 
 dotenv.config();
 const port = process.env.PORT;

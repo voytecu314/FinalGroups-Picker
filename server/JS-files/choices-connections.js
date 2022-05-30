@@ -9,7 +9,7 @@
                 
                     for (const member in choices) {
                         
-                            if(group!==member){
+                            if(group!==member){console.log(members);
                                 //can remove parseInt after resetting DB
                                 connections[group].push({
                                     [member]:(parseInt(choices[group][members.indexOf(member)][member])+
