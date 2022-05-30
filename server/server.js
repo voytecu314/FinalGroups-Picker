@@ -8,10 +8,12 @@ import { auth, adminAuth } from './pass-encryption/passENC.js';
 import countConnections from './JS-files/choices-connections.js';
 import membersModel from './model/membersModel.js';
 import choicesModel from './model/choicesModel.js';
-import choose_strongest_group, { members } from './JS-files/choose_one_strongest_group.js';
+import choose_strongest_group from './JS-files/choose_one_strongest_group.js';
+
+const members=["Allan","Andrija","Ann","Carlos","Egle","Felix","Fin","Gerald","Haakim","Marco","Paul","Uche","Vonn","Wais","Wojtek"];
+
 
 const app = express();
-console.log(members);
 
 dotenv.config();
 const port = process.env.PORT;
@@ -76,7 +78,7 @@ app.get('/show-groups', async (req, res)=>{
     
     const connections = countConnections(choices, members);
 
-    const strongest_groups = choose_strongest_group(choices, connections);
+    const strongest_groups = choose_strongest_group(choices, connections, members);
 
     res.json(strongest_groups);
 

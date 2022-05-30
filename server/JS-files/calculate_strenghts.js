@@ -1,7 +1,6 @@
 import { two_permutations } from "./permutations.js";
-import { members} from "./choose_one_strongest_group.js";
 
-export const strengths = (permutations, connections) => {
+export const strengths = (permutations, connections, members) => {
     
     const n_sum=(permutations[0].length*(permutations[0].length-1))/2;
 
