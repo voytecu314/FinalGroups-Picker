@@ -1,8 +1,4 @@
-import { useRef } from "react";
-
 const PassForm = ({name,setAuth}) => {
-
-        const form = useRef();
 
         const submitHandler = (e) => {
                 e.preventDefault();
@@ -21,8 +17,25 @@ const PassForm = ({name,setAuth}) => {
                         .catch(err=>console.log(err.message));
         }
 
+        const ADMINsubmitHandler = (e) => {
+                e.preventDefault();
+                const inputs = e.target.children;
+                const loginData = {
+                        [inputs[0].name]: inputs[0].value,
+                        [inputs[1].name]: inputs[1].value
+                        }
+                fetch('http://localhost:5000/login/admin',{
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(loginData)
+                        })
+                        .then(rsp=>rsp.json())
+                        .then(console.log)
+                        .catch(err=>console.log(err.message));
+        }
+
   return (
-    <form id="pass-form" ref={form} onSubmit={submitHandler}>
+    <form id="pass-form" onSubmit={name!=='ADMIN'?submitHandler:ADMINsubmitHandler}>
             
             <input  className="modal-input" 
                     type="text" 

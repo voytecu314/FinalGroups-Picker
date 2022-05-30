@@ -1,20 +1,28 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import cors from 'cors';
 import logger from 'morgan';
-import auth from './pass-encryption/passENC.js';
 
+import { auth, adminAuth } from './pass-encryption/passENC.js';
+import countConnections from './JS-files/choices-connections.js';
 import membersModel from './model/membersModel.js';
 import choicesModel from './model/choicesModel.js';
 import choose_strongest_group, { members } from './JS-files/choose_one_strongest_group.js';
 
 const app = express();
-const port = process.env.PORT || 5000;
 
-mongoose.connect('mongodb+srv://voytecu:xXyYzZ123@cluster0.qtglk.mongodb.net/EssenceGroups?retryWrites=true&w=majority', ()=>console.log('Connected to DB'));
+
+dotenv.config();
+const port = process.env.PORT;
+const DB_CONNECTION_URL = process.env.DB_CONNECTION_URL;
+
+mongoose.connect(DB_CONNECTION_URL)
+                .then(()=>console.log('Connected to DB'))
+                .catch((err)=>console.log(err.message));
 
 app.use(express.json());
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({extended:true}))
 app.use(logger('dev'));
 app.use(cors());
 
@@ -34,12 +42,13 @@ app.get('/members',async (req, res) => {
 
 app.post('/members', async (req, res) => {
 
-    await choicesModel.create(req.body);
+    await membersModel.create(req.body);
     res.send('Success');
         
 }); 
 
 app.post('/login', auth);
+app.post('/login/admin', adminAuth);
 
 app.put('/votes', async (req, res) => {
 
@@ -64,30 +73,10 @@ app.get('/show-groups', async (req, res)=>{
     const choices = result[0]['_doc' ];
     delete choices['_id'];
     delete choices['__v'];
-    console.log(choices);
-    const connections = {};
-
-    for (const group in choices) {
-        
-           connections[group] = [];
-            
-                for (const member in choices) {
-                      
-                        if(group!==member){
-                            
-                            connections[group].push({
-                                [member]:(parseInt(choices[group][members.indexOf(member)][member])+
-                                         parseInt(choices[member][members.indexOf(group)][group]))/20})
-                        
-                        }else  connections[group].push({[member]:null});
-                     
-                } 
-        
-    }
+    
+    const connections = countConnections(choices, members);
 
     const strongest_groups = choose_strongest_group(choices, connections);
-
-    
 
     res.json(strongest_groups);
 

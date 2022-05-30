@@ -63,7 +63,6 @@
     height: 100vh;
     background-color: grey;
     border: 10px darkgray solid;
-
 }
 
 #close-modal {
@@ -82,6 +81,10 @@
     width: 400px;
     height: 50px;
     font-size: 2.3rem;
+}
+
+#final-modal {
+
 }
 
 #pass-form {

@@ -5,18 +5,15 @@ import MyContext from '../context/MyContext';
 const Card = ({name, addClass}) => {
 
     const {setShowModal, setModalName} = useContext(MyContext);
+    
 
     const showLoginModal = (e) => {
         setShowModal(true);
-        setModalName(e.target.innerText);
-    }
-
-    const showVotes = () => {
-      console.log('Votes!');
+        setModalName(addClass==='card'?e.target.innerText:'ADMIN');
     }
 
   return (
-    <button className={addClass} onClick={addClass==='card'?showLoginModal:showVotes}>{name}</button>
+    <button className={addClass} onClick={showLoginModal} >{name}</button>
   )
 }
 

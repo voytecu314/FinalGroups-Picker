@@ -20,7 +20,7 @@ const Sliders = ({name}) => {
         for(let i=1; i<formElements.length-1; i++) {
 
             formElements[i].children[1].name!==name ?
-            data[name].push({[formElements[i].children[1].name]: formElements[i].children[1].value}) :
+            data[name].push({[formElements[i].children[1].name]: parseInt(formElements[i].children[1].value)}) :
             data[name].push({[formElements[i].children[1].name]: null})
         }
            
@@ -46,22 +46,22 @@ const Sliders = ({name}) => {
         
         {members.names.map((member,i)=>member!==name?
                                 (<div key={i}>
-                                <label className='slid-labels' htmlFor="vol">
+                                <label className='slid-labels' htmlFor={`vol-${i}`}>
                                     <span>{member}</span> <span>50 %</span> </label>
                                 <input 
                                     className="slider" 
                                     type="range" 
-                                    id="vol" 
+                                    id={`vol-${i}`} 
                                     name={member}
                                     onChange={onChangeHandler}/>
                                 </div>):
                                 (<div key={i}>
-                                    <label className='slid-labels' htmlFor="vol">
+                                    <label className='slid-labels' htmlFor={`vol-${i}`}>
                                         <span>{member}</span> <span>100 %</span> </label>
                                     <input 
                                         className="slider" 
                                         type="range" 
-                                        id="vol" 
+                                        id={`vol-${i}`} 
                                         value={100}
                                         name={member}
                                         disabled/>

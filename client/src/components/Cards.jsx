@@ -1,13 +1,14 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import MyContext from "../context/MyContext.js";
 import Card from "./Card.jsx";
 
 const Cards = () => {
-
+    
     const { members } = useContext(MyContext);
-
+    
     if(members.loading) return <p>Loading...</p>
     if(members.error) return <p>{members.error}</p>
+    
 
   return (
     <div id="cards">
