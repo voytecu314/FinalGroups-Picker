@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import MyContext from "./MyContext";
 
 const MyProvider = ({ children }) => {
 
     const [showModal, setShowModal] = useState(false);
     const [modalName, setModalName] = useState(null);
+    const [renderDeadline, setRenderDeadline] = useState();
     const [members, setMembers] = useState({names: null, loading: true, error: null});
+    const modalRef = useRef();
 
     useEffect(()=>{
       fetch('http://localhost:5000/members')
@@ -15,7 +17,16 @@ const MyProvider = ({ children }) => {
     },[]);
 
     return (
-        <MyContext.Provider value={ {showModal, setShowModal, modalName, setModalName, members} }>
+        <MyContext.Provider value={ {
+                                        showModal, 
+                                        setShowModal, 
+                                        modalName, 
+                                        setModalName, 
+                                        members, 
+                                        modalRef,
+                                        renderDeadline, 
+                                        setRenderDeadline
+                                        } }>
         
         {children}
 

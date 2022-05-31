@@ -7,7 +7,7 @@ const FinalGroupsModal = () => {
     useEffect(()=>{
         fetch('http://localhost:5000/show-groups')
             .then(rsp=>rsp.json())
-            .then(data=>{console.log(data);setGroups(data)})
+            .then(data=>setGroups(data))
             .catch(console.log);
     },[]);
     

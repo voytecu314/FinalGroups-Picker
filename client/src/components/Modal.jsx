@@ -9,8 +9,8 @@ const Modal = ({name}) => {
 
   const [auth, setAuth] = useState(null);
   const [adminAuth, setAdminAuth] = useState(null);
+  const {setShowModal, modalRef} = useContext(MyContext);
 
-    const {setShowModal, modalRef} = useContext(MyContext);
 
     const closeModal = () => {
         setShowModal(false);
