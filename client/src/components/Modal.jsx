@@ -19,8 +19,8 @@ const Modal = ({name}) => {
   return (
     <div id="modal">
 
-        <h1>{auth===null?'Please Login':auth?`Welcome ${name} !`:'Password not correct'}</h1>  
-        {adminAuth}
+        <h1>{(auth || adminAuth)?`Welcome ${name} !`:(auth===null && adminAuth===null)?'Please Login':'Password not correct'}</h1>  
+        {adminAuth && <FinalGroupsModal />}
         {auth?
         <Sliders name={name}/>:
         <PassForm name={name} setAuth={setAuth} setAdminAuth={setAdminAuth} />}

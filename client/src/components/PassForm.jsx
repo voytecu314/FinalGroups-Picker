@@ -1,4 +1,4 @@
-const PassForm = ({name,setAuth}) => {
+const PassForm = ({name,setAuth, setAdminAuth}) => {
 
         const submitHandler = (e) => {
                 e.preventDefault();
@@ -30,7 +30,7 @@ const PassForm = ({name,setAuth}) => {
                         body: JSON.stringify(loginData)
                         })
                         .then(rsp=>rsp.json())
-                        .then(console.log)
+                        .then(result=>setAdminAuth(result.auth))
                         .catch(err=>console.log(err.message));
         }
 
