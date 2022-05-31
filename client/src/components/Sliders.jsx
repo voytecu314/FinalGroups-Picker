@@ -1,9 +1,18 @@
-import {  useContext } from 'react';
+import {  useState, useContext, useEffect } from 'react';
 import MyContext from '../context/MyContext';
 
 const Sliders = ({name}) => {
 
     const { members } = useContext(MyContext);
+    const [nameChoices, setNameChoices] = useState(null);
+
+    useEffect(()=>{
+
+        fetch('http://localhost:5000/choices')
+             .then(rsp=>rsp.json())
+             .then(data=>setNameChoices(data[name]))
+
+    },[name]);
 
     const onChangeHandler = (e) => {
         const ptsSpan = e.target.previousSibling.children[1];
@@ -47,10 +56,13 @@ const Sliders = ({name}) => {
         {members.names.map((member,i)=>member!==name?
                                 (<div key={i}>
                                 <label className='slid-labels' htmlFor={`vol-${i}`}>
-                                    <span>{member}</span> <span>50 %</span> </label>
+                                    <span>{member}</span> <span>{
+                                    nameChoices && `${nameChoices[i][member]} %`
+                                                                }</span> </label>
                                 <input 
                                     className="slider" 
                                     type="range" 
+                                    value={nameChoices && nameChoices[i][member]}
                                     id={`vol-${i}`} 
                                     name={member}
                                     onChange={onChangeHandler}/>
