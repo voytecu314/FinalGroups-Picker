@@ -1,7 +1,13 @@
-const PassForm = ({name,setAuth, setAdminAuth}) => {
+import { useContext } from "react";
+import MyContext from "../context/MyContext";
+
+const PassForm = ({name, setAuth, setAdminAuth}) => {
+
+        const { modalRef } = useContext(MyContext);
 
         const submitHandler = (e) => {
                 e.preventDefault();
+                
                 const inputs = e.target.children;
                 const loginData = {
                         [inputs[0].name]: inputs[0].value,
@@ -13,7 +19,11 @@ const PassForm = ({name,setAuth, setAdminAuth}) => {
                         body: JSON.stringify(loginData)
                         })
                         .then(rsp=>rsp.json())
-                        .then(result=>setAuth(result.auth))
+                        .then(result=>{
+                                        setAuth(result.auth);
+                                        if(result.auth) modalRef.current.style.backgroundImage=
+                                        'linear-gradient(to right, bisque , gray 30%, blue 195%)';
+                                        })
                         .catch(err=>console.log(err.message));
         }
 
@@ -30,7 +40,11 @@ const PassForm = ({name,setAuth, setAdminAuth}) => {
                         body: JSON.stringify(loginData)
                         })
                         .then(rsp=>rsp.json())
-                        .then(result=>setAdminAuth(result.auth))
+                        .then(result=>{
+                                        setAdminAuth(result.auth);
+                                        if(result.auth) modalRef.current.style.backgroundImage=
+                                        'linear-gradient(bisque , gray 30%, blue 295%)';
+                                        })
                         .catch(err=>console.log(err.message));
         }
 

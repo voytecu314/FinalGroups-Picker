@@ -10,14 +10,14 @@ const Modal = ({name}) => {
   const [auth, setAuth] = useState(null);
   const [adminAuth, setAdminAuth] = useState(null);
 
-    const {setShowModal} = useContext(MyContext);
+    const {setShowModal, modalRef} = useContext(MyContext);
 
     const closeModal = () => {
         setShowModal(false);
     }
 
   return (
-    <div id="modal">
+    <div id="modal" ref={modalRef} >
 
         <h1>{(auth || adminAuth)?`Welcome ${name} !`:(auth===null && adminAuth===null)?'Please Login':'Password not correct'}</h1>  
         {adminAuth && <FinalGroupsModal />}
