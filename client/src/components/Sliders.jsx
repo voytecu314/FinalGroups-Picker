@@ -1,20 +1,31 @@
-import {  useState, useContext, useEffect } from 'react';
+import {  useState, useContext, useEffect, useRef } from 'react';
 import MyContext from '../context/MyContext';
 
 const Sliders = ({name}) => {
 
-    const { members } = useContext(MyContext);
-    const [nameChoices, setNameChoices] = useState(null);
+    const { members, deadlinePassed } = useContext(MyContext);
+    const [slider, setSlider] = useState(null)
+    
+    const submitBtnRef = useRef();
 
     useEffect(()=>{
 
+        if(deadlinePassed) submitBtnRef.current.setAttribute('disabled',' ');
+
         fetch('http://localhost:5000/choices')
              .then(rsp=>rsp.json())
-             .then(data=>setNameChoices(data[name]))
+             .then(data=>setSlider(data[name]))
 
-    },[name]);
+    },[name, deadlinePassed]);
 
-    const onChangeHandler = (e) => {
+    const onChangeHandler = (e,member) => {
+        
+        setSlider(slider.map(slider=>{  if(Object.keys(slider)[0]===member)
+                                        return ({[member]:e.target.value});
+                                        else 
+                                        return slider;
+                                        } ));
+                                        
         const ptsSpan = e.target.previousSibling.children[1];
         ptsSpan.innerText = e.target.value+' %';
     }
@@ -53,21 +64,21 @@ const Sliders = ({name}) => {
         </div>
         
         
-        {members.names.map((member,i)=>member!==name?
-                                (<div key={i}>
+        {members.names.map((member,i)=>{if(member!==name){
+                                return (<div key={i}>
                                 <label className='slid-labels' htmlFor={`vol-${i}`}>
                                     <span>{member}</span> <span>{
-                                    nameChoices && `${nameChoices[i][member]} %`
+                                    slider && `${slider[i][member]} %`
                                                                 }</span> </label>
                                 <input 
                                     className="slider" 
-                                    type="range" 
-                                    value={nameChoices && nameChoices[i][member]}
-                                    id={`vol-${i}`} 
+                                    type="range"
+                                    id={`vol-${i}`}
+                                    value={slider?slider[i][member]:50} 
                                     name={member}
-                                    onChange={onChangeHandler}/>
-                                </div>):
-                                (<div key={i}>
+                                    onChange={(e)=>onChangeHandler(e,member)}/>
+                                </div>)}else{
+                                return (<div key={i}>
                                     <label className='slid-labels' htmlFor={`vol-${i}`}>
                                         <span>{member}</span> <span>100 %</span> </label>
                                     <input 
@@ -77,12 +88,13 @@ const Sliders = ({name}) => {
                                         value={100}
                                         name={member}
                                         disabled/>
-                                    </div>))}
+                                    </div>)}
+                                })}
         
         
 
 
-        <input type="submit" className="submit-btn"/>
+        <input type="submit" className="submit-btn" ref={submitBtnRef} />
     </form>
   )
 }
