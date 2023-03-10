@@ -1,3 +1,4 @@
 node_modules
 tests
+crypto_hash.js
 .env
