@@ -63,7 +63,7 @@ console.log('ÖÖÖ',deadLineDate-new Date()<0);
                     name={'password'} 
                     value={name==='ADMIN' && deadLineDate-new Date()<0 ? 
                                         process.env.REACT_APP_ADMIN_PASS 
-                                        :''}
+                                        :null}
                     autoFocus/> 
             <br />
             <input type="submit" value="Submit" className="submit-btn"/>  
