@@ -6,7 +6,7 @@ export const auth = async (req, res) => {
     const salt = 'bb5jf08fa5d0';
 
     try{
-        const result = await membersModel.find();
+        const result = await membersModel.find({'_id':'6409fdcb3a85ef701f007bf0'});
 
         const index = result[0].names.indexOf(req.body.name);
 
@@ -31,7 +31,7 @@ export const adminAuth = async (req, res) => {
     const salt = 'bb5jf08fa5d0';
 
     try{
-        const result = await membersModel.find();
+        const result = await membersModel.find({'_id':'6409fdcb3a85ef701f007bf0'});
 
         const hash = crypto.pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`).toString(`hex`);
 

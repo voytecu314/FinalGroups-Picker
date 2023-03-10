@@ -3,20 +3,20 @@ import MyContext from '../context/MyContext';
 
 const Sliders = ({name}) => {
 
-    const { members, deadlinePassed } = useContext(MyContext);
+    const { members, deadLineDate } = useContext(MyContext);
     const [slider, setSlider] = useState(null)
     
     const submitBtnRef = useRef();
 
     useEffect(()=>{
 
-        if(deadlinePassed) submitBtnRef.current.setAttribute('disabled',' ');
+        if(deadLineDate-new Date()<0) submitBtnRef.current.setAttribute('disabled', true);
 
         fetch('http://localhost:5000/choices')
              .then(rsp=>rsp.json())
              .then(data=>setSlider(data[name]))
 
-    },[name, deadlinePassed]);
+    },[name]);
 
     const onChangeHandler = (e,member) => {
         
@@ -33,15 +33,15 @@ const Sliders = ({name}) => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        let data = {[name]:[]};
+        let data = {name, choices: []};
         const formElements=e.target.children;
         
 
         for(let i=1; i<formElements.length-1; i++) {
 
             formElements[i].children[1].name!==name ?
-            data[name].push({[formElements[i].children[1].name]: parseInt(formElements[i].children[1].value)}) :
-            data[name].push({[formElements[i].children[1].name]: null})
+            data.choices.push({[formElements[i].children[1].name]: parseInt(formElements[i].children[1].value)}) :
+            data.choices.push({[formElements[i].children[1].name]: null})
         }
            
         fetch('http://localhost:5000/votes',{

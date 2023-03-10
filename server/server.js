@@ -16,7 +16,7 @@ const app = express();
 
 dotenv.config();
 const port = process.env.PORT;
-const DB_CONNECTION_URL = process.env.DB_CONNECTION_URL;
+const DB_CONNECTION_URL = process.env.MONGO;
 
 mongoose.connect(DB_CONNECTION_URL)
                 .then(()=>console.log('Connected to DB'))
@@ -28,15 +28,14 @@ app.use(logger('dev'));
 app.use(cors());
 
 app.get('/choices',async (req, res) => {
-
-    const result = await choicesModel.find();
-    res.json(result[0]);
-
+	
+    const result = await choicesModel.find({'_id':'640a20003a85ef701f007bf2'});
+    res.json(result[0].choices);
 });
 
 app.get('/members',async (req, res) => {
    
-    const result = await membersModel.find();
+    const result = await membersModel.find({'_id':'6409fdcb3a85ef701f007bf0'});
     res.json(result[0].names);
 
 });
@@ -53,25 +52,31 @@ app.post('/login/admin', adminAuth);
 
 app.put('/votes', async (req, res) => {
 
-    const update = await choicesModel.findOneAndUpdate({'_id':'6290fd521d7c710dc5a595f3'}, req.body);
-    console.log(req.body);
-    res.json('HI from Server');
+    try{
+        
+    	const update = await choicesModel.findByIdAndUpdate({'_id':'640a20003a85ef701f007bf2'},{ [`choices.${req.body.name}`]: req.body.choices });
+        
+    	res.json('HI from Server');
+    } catch(err) {
+    	console.log(err);
+    	res.json(err);
+    }
 });
 
 app.post('/points', async (req, res) => {
 
     const result = await membersModel.find();
-    console.log(req.body);
     res.redirect('http://localhost:3000/');
         
 });
 
 
 app.get('/show-groups', async (req, res)=>{
-    const mmbrs = await membersModel.find();
-    const result = await choicesModel.find();
+    const mmbrs = await membersModel.find({'_id':'6409fdcb3a85ef701f007bf0'});
+    const result = await choicesModel.find({'_id':'640a20003a85ef701f007bf2'});
     const members = mmbrs[0].names;
-    const choices = result[0]['_doc' ];
+    //const choices = result[0]['_doc' ]; //?? model-Object
+    const choices = result[0].choices;
     delete choices['_id'];
     delete choices['__v'];
    

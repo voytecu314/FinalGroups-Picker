@@ -5,6 +5,7 @@ const MyProvider = ({ children }) => {
 
     const [showModal, setShowModal] = useState(false);
     const [modalName, setModalName] = useState(null);
+    const deadLineDate = new Date(2023, 9, 2, 10);
     const [renderDeadline, setRenderDeadline] = useState();
     const [members, setMembers] = useState({names: null, loading: true, error: null});
     const modalRef = useRef();
@@ -24,6 +25,7 @@ const MyProvider = ({ children }) => {
                                         setModalName, 
                                         members, 
                                         modalRef,
+                                        deadLineDate,
                                         renderDeadline, 
                                         setRenderDeadline
                                         } }>

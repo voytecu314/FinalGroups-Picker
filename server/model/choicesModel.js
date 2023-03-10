@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const choicesSchema = mongoose.Schema({
+  choices: Object
+});
+
+/* const choicesSchema = mongoose.Schema({
     Allan: [Object],
     Andrija: [Object],
       Ann: [Object],
@@ -16,7 +20,7 @@ const choicesSchema = mongoose.Schema({
       Vonn: [Object],
       Wais: [Object],
       Wojtek: [Object]
-});
+}); */
 
 
 /* const choicesSchema = mongoose.Schema({

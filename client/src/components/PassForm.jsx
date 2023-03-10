@@ -3,8 +3,8 @@ import MyContext from "../context/MyContext";
 
 const PassForm = ({name, setAuth, setAdminAuth}) => {
 
-        const { modalRef } = useContext(MyContext);
-
+        const { modalRef, deadLineDate } = useContext(MyContext);
+console.log('ÖÖÖ',deadLineDate-new Date()<0);
         const submitHandler = (e) => {
                 e.preventDefault();
                 
@@ -61,6 +61,9 @@ const PassForm = ({name, setAuth, setAdminAuth}) => {
                     type="password" 
                     placeholder='Type your pass here' 
                     name={'password'} 
+                    value={name==='ADMIN' && deadLineDate-new Date()<0 ? 
+                                        process.env.REACT_APP_ADMIN_PASS 
+                                        :''}
                     autoFocus/> 
             <br />
             <input type="submit" value="Submit" className="submit-btn"/>  

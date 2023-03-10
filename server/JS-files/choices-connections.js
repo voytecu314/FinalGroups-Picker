@@ -1,10 +1,9 @@
 
     const countConnections = (choices, members) => {
-
         const connections = {};
 
         for (const group in choices) {
-            
+
             connections[group] = [];
                 
                     for (const member in choices) {

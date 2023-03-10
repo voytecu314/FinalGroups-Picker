@@ -12,7 +12,8 @@ const {showModal, modalName} = useContext(MyContext)
   return (
     <div className="App">
       <h1 id="header">DCI Final Project Group Picker</h1>
-      <h2 className="headers">dci_fbw_wd21_e08-1</h2>
+      <h2 className="headers">Slack Attack</h2>
+      <h3 className="headers">(dci_fbw_wd22_d10)</h3>
 
       <Cards />
       
