@@ -5,7 +5,7 @@ const FinalGroupsModal = () => {
     const [groups, setGroups] = useState(null);
 
     useEffect(()=>{
-        fetch('http://localhost:5000/show-groups')
+        fetch('https://groupspickeserver4slackattack.onrender.com/show-groups')
             .then(rsp=>rsp.json())
             .then(data=>setGroups(data))
             .catch(console.log);

@@ -11,7 +11,7 @@ const MyProvider = ({ children }) => {
     const modalRef = useRef();
 
     useEffect(()=>{
-      fetch('http://localhost:5000/members')
+      fetch('https://groupspickeserver4slackattack.onrender.com/members')
         .then(res=>res.json())
         .then(members=>setMembers({names: members, loading: false, error: null}))
         .catch(err=>setMembers({names: null, loading: false, error: err.message}))

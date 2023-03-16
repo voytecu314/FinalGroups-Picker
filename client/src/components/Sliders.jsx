@@ -12,7 +12,7 @@ const Sliders = ({name}) => {
 
         if(deadLineDate-new Date()<0) submitBtnRef.current.setAttribute('disabled', true);
 
-        fetch('http://localhost:5000/choices')
+        fetch('https://groupspickeserver4slackattack.onrender.com/choices')
              .then(rsp=>rsp.json())
              .then(data=>setSlider(data[name]))
 
@@ -44,7 +44,7 @@ const Sliders = ({name}) => {
             data.choices.push({[formElements[i].children[1].name]: null})
         }
            
-        fetch('http://localhost:5000/votes',{
+        fetch('https://groupspickeserver4slackattack.onrender.com/votes',{
                         method: 'PUT',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify(data)

@@ -13,7 +13,7 @@ console.log('ÖÖÖ',deadLineDate-new Date()<0);
                         [inputs[0].name]: inputs[0].value,
                         [inputs[1].name]: inputs[1].value
                         }
-                fetch('http://localhost:5000/login',{
+                fetch('https://groupspickeserver4slackattack.onrender.com/login',{
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify(loginData)
@@ -34,7 +34,7 @@ console.log('ÖÖÖ',deadLineDate-new Date()<0);
                         [inputs[0].name]: inputs[0].value,
                         [inputs[1].name]: inputs[1].value
                         }
-                fetch('http://localhost:5000/login/admin',{
+                fetch('https://groupspickeserver4slackattack.onrender.com/login/admin',{
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify(loginData)
